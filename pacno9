@@ -1,0 +1,119 @@
+import java.util.Scanner;
+
+public class Game {
+    static char[][] board;
+    static int size = 4;
+    static char currentPlayer = 'X';
+    static Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        initializeBoard();
+
+        while (true) {
+            printBoard();
+
+            int row = getRowFromUser();
+            int col = getColFromUser();
+
+            if (isCellEmpty(row, col)) {
+                board[row][col] = currentPlayer;
+
+                if (checkForWin(row, col)) {
+                    printBoard();
+                    System.out.println("Player " + currentPlayer + " wins!");
+                    break;
+                }
+
+                if (isBoardFull()) {
+                    printBoard();
+                    System.out.println("It's a draw!");
+                    break;
+                }
+
+                switchPlayer();
+            } else {
+                System.out.println("Invalid move. Try again.");
+            }
+        }
+
+        scanner.close();
+    }
+
+    static void initializeBoard() {
+        board = new char[size][size];
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                board[i][j] = ' ';
+    }
+
+    static void printBoard() {
+        System.out.println("Current board:");
+        for (int i = 0; i < size; i++) {
+            System.out.print("|");
+            for (int j = 0; j < size; j++) {
+                System.out.print(" " + board[i][j] + " |");
+            }
+            System.out.println();
+            System.out.println("-".repeat(size * 4 + 1));
+        }
+    }
+
+    static int getRowFromUser() {
+        System.out.print("Enter row (0-" + (size - 1) + "): ");
+        return scanner.nextInt();
+    }
+
+    static int getColFromUser() {
+        System.out.print("Enter column (0-" + (size - 1) + "): ");
+        return scanner.nextInt();
+    }
+
+    static boolean isCellEmpty(int row, int col) {
+        return board[row][col] == ' ';
+    }
+
+    static boolean isBoardFull() {
+        for (int i = 0; i < size; i++)
+            for (int j = 0; j < size; j++)
+                if (board[i][j] == ' ') return false;
+        return true;
+    }
+
+    static void switchPlayer() {
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+    }
+
+    static boolean checkForWin(int row, int col) {
+        return checkDirection(row, col, 1, 0)    
+            || checkDirection(row, col, 0, 1)    
+            || checkDirection(row, col, 1, 1)    
+            || checkDirection(row, col, 1, -1);  
+    }
+
+  
+    static boolean checkDirection(int row, int col, int deltaRow, int deltaCol) {
+        int count = 1;
+
+        
+        count += countMatches(row, col, deltaRow, deltaCol);
+        
+        count += countMatches(row, col, -deltaRow, -deltaCol);
+
+        return count >= 4;
+    }
+
+    
+    static int countMatches(int row, int col, int dRow, int dCol) {
+        int r = row + dRow;
+        int c = col + dCol;
+        int count = 0;
+
+        while (r >= 0 && r < size && c >= 0 && c < size && board[r][c] == currentPlayer) {
+            count++;
+            r += dRow;
+            c += dCol;
+        }
+
+        return count;
+    }
+}
