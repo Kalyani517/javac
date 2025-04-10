@@ -1,0 +1,125 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+
+
+class Student {
+    public String name;
+    public int rollNo;
+    public double marks;
+
+    
+    public Student(String name, int rollNo, double marks) {
+        this.name = name;
+        this.rollNo = rollNo;
+        this.marks = marks;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "Roll No: " + rollNo + ", Name: " + name + ", Marks: " + marks;
+    }
+}
+
+// Student Management System class
+class StudentManagementSystem {
+    public ArrayList<Student> students;
+    private Scanner scanner;
+
+    // Constructor to initialize the list and scanner
+    public StudentManagementSystem() {
+        students = new ArrayList<>();
+        scanner = new Scanner(System.in);
+    }
+
+    // Method to add a new student
+    public void addStudent() {
+        System.out.print("Enter Student Name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter Roll Number: ");
+        int rollNo = scanner.nextInt();
+
+        System.out.print("Enter Marks: ");
+        double marks = scanner.nextDouble();
+        scanner.nextLine();  // To consume the newline character after nextDouble()
+
+        // Create new student and add to list
+        Student student = new Student(name, rollNo, marks);
+        students.add(student);
+
+        System.out.println("Student added successfully.");
+    }
+
+    // Method to display all students
+    public void displayAllStudents() {
+        if (students.isEmpty()) {
+            System.out.println("No students found.");
+        } else {
+            System.out.println("\nAll Students:");
+            for (Student student : students) {
+                System.out.println(student);
+            }
+        }
+    }
+
+    // Method to search student by Roll Number
+    public void searchStudentByRollNo() {
+        System.out.print("Enter Roll Number to search: ");
+        int rollNo = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+
+        boolean found = false;
+        for (Student student : students) {
+            if (student.rollNo == rollNo) {
+                System.out.println("Student Found: " + student);
+                found = true;
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Student with Roll No " + rollNo + " not found.");
+        }
+    }
+
+    // Menu method to display options
+    public void menu() {
+        int choice;
+
+        do {
+            System.out.println("\nStudent Management System");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display All Students");
+            System.out.println("3. Search Student by Roll No");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+
+            switch (choice) {
+                case 1:
+                    addStudent();
+                    break;
+                case 2:
+                    displayAllStudents();
+                    break;
+                case 3:
+                    searchStudentByRollNo();
+                    break;
+                case 4:
+                    System.out.println("Exiting the program. Goodbye!");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        } while (choice != 4);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        StudentManagementSystem sms = new StudentManagementSystem();
+        sms.menu();
+    }
+}
