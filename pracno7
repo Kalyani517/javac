@@ -1,0 +1,33 @@
+public class RecursivePattern {
+
+    public static void main(String[] args) {
+        int size = 4;
+        printUpper(size, 1);
+    }
+
+   
+    public static void printUpper(int size, int current) {
+        if (current > size) {
+            printLower(size - 1);
+            return;
+        }
+        printStars(current);
+        System.out.println(); // ln
+        printUpper(size, current + 1);
+    }
+
+    
+    public static void printLower(int current) {
+        if (current == 0) return;
+        printStars(current);
+        System.out.println(); // ln
+        printLower(current - 1);
+    }
+
+   
+    public static void printStars(int n) {
+        if (n == 0) return;
+        System.out.print("*");
+        printStars(n - 1);
+    }
+}
