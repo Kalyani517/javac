@@ -1,0 +1,55 @@
+public class InheritanceExample {
+
+    
+    static class Animal {
+        String name;
+
+        public void speak() {
+            System.out.println(name + " makes a sound.");
+        }
+
+        public void eat() {
+            System.out.println(name + " is eating.");
+        }
+    }
+
+    
+    static class Dog extends Animal {
+        public void speak() {
+            System.out.println(name + " says: Woof woof!");
+        }
+
+        public void fetch() {
+            System.out.println(name + " is fetching the ball.");
+        }
+    }
+
+    
+    static class Cat extends Animal {
+        public void speak() {
+            System.out.println(name + " says: Meow!");
+        }
+
+        public void scratch() {
+            System.out.println(name + " is scratching the furniture.");
+        }
+    }
+
+    // Main method to test inheritance
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        dog.name = "Buddy";
+        dog.speak();      
+        dog.eat();        
+        dog.fetch();      
+
+        System.out.println();
+
+        Cat cat = new Cat();
+        cat.name = "Whiskers";
+        cat.speak();      
+
+        cat.eat();        
+        cat.scratch();    
+    }
+}
